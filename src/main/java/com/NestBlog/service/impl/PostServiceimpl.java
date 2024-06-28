@@ -4,18 +4,25 @@ import com.NestBlog.Payload.PostDto;
 import com.NestBlog.entity.Post;
 import com.NestBlog.repository.PostRepository;
 import com.NestBlog.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 @Service
 public class PostServiceimpl implements PostService {
     private PostRepository postRepository;
 
-    public PostServiceimpl(PostRepository postRepository) {
+    private ModelMapper modelMapper;
+
+    public PostServiceimpl(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
+        this.modelMapper= modelMapper;
     }
 
     @Override
     public PostDto createPost(PostDto postDto) {
+
         Post post = MapToEntity(postDto);
 
         Post savedpost = postRepository.save(post);
@@ -26,20 +33,12 @@ public class PostServiceimpl implements PostService {
     }
 
     Post MapToEntity(PostDto postDto){
-        Post post = new Post();
-        post.setId(postDto.getId());
-        post.setTitle(post.getTitle());
-        post.setDescription(postDto.getDescription());
-        post.setContent(postDto.getContent());
+        Post post = modelMapper.map(postDto, Post.class);
         return post;
     }
 
     PostDto MapToEntity(Post post){
-        PostDto dto = new PostDto();
-        dto.setId(post.getId());
-        dto.setTitle(post.getTitle());
-        dto.setDescription(post.getDescription());
-        dto.setContent(post.getContent());
+        PostDto dto = modelMapper.map(post, PostDto.class);
         return dto;
     }
 }
