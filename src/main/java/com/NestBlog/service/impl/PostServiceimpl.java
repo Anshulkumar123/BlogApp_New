@@ -32,6 +32,12 @@ public class PostServiceimpl implements PostService {
         return dto;
     }
 
+    @Override
+    public void deletePost(long id) {
+        postRepository.deleteById(id);
+    }
+
+
     Post MapToEntity(PostDto postDto){
         Post post = modelMapper.map(postDto, Post.class);
         return post;
