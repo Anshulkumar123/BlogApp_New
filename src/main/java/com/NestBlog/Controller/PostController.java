@@ -2,8 +2,10 @@ package com.NestBlog.Controller;
 
 import com.NestBlog.Payload.PostDto;
 import com.NestBlog.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +19,9 @@ public class PostController {
 
     //http://localhost:8080/api/posts
     @PostMapping
-    public ResponseEntity<?> createPost(@RequestBody PostDto postDto){
-        if(postDto.getTitle().length()<3){
-            return new ResponseEntity<>("Title should be atleast 3 characters", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         PostDto post = postService.createPost(postDto);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
