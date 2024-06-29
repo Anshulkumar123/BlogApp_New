@@ -17,7 +17,10 @@ public class PostController {
 
     //http://localhost:8080/api/posts
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
+    public ResponseEntity<?> createPost(@RequestBody PostDto postDto){
+        if(postDto.getTitle().length()<3){
+            return new ResponseEntity<>("Title should be atleast 3 characters", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         PostDto post = postService.createPost(postDto);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
