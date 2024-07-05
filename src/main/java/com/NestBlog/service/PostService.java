@@ -9,5 +9,5 @@ public interface PostService {
 
     void deletePost(long id);
 
-    List<PostDto> fetchAllPosts();
+    List<PostDto> fetchAllPosts(int pageNo, int pageSize);
 }

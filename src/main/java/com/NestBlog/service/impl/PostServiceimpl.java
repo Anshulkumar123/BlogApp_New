@@ -5,9 +5,10 @@ import com.NestBlog.entity.Post;
 import com.NestBlog.repository.PostRepository;
 import com.NestBlog.service.PostService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,8 +42,11 @@ public class PostServiceimpl implements PostService {
     }
 
     @Override
-    public List<PostDto> fetchAllPosts() {
-        List<Post> post = postRepository.findAll();
+    public List<PostDto> fetchAllPosts(int pageNo, int pageSize) {
+//        List<Post> post = postRepository.findAll();
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Post> all = postRepository.findAll(pageable);
+        List<Post> post = all.getContent();
         List<PostDto> postDtos = post.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
         return postDtos;
     }
