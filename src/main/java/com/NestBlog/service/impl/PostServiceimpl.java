@@ -1,5 +1,6 @@
 package com.NestBlog.service.impl;
 
+import com.NestBlog.Payload.ListPostDto;
 import com.NestBlog.Payload.PostDto;
 import com.NestBlog.entity.Post;
 import com.NestBlog.repository.PostRepository;
@@ -43,7 +44,7 @@ public class PostServiceimpl implements PostService {
     }
 
     @Override
-    public List<PostDto> fetchAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public ListPostDto fetchAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -51,7 +52,15 @@ public class PostServiceimpl implements PostService {
         Page<Post> all = postRepository.findAll(pageable);
         List<Post> post = all.getContent();
         List<PostDto> postDtos = post.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
-        return postDtos;
+
+        ListPostDto listPostDto = new ListPostDto();
+        listPostDto.setPostDto(postDtos);
+        listPostDto.setTotalPages(all.getTotalPages());
+        listPostDto.setTotalElements((int) all.getTotalElements());
+        listPostDto.setFirstPage(all.isFirst());
+        listPostDto.setLastPage(all.isLast());
+        listPostDto.setPageNumber(all.getNumber());
+        return listPostDto;
     }
 
     Post MapToEntity(PostDto postDto){

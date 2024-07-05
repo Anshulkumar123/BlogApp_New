@@ -1,5 +1,6 @@
 package com.NestBlog.Controller;
 
+import com.NestBlog.Payload.ListPostDto;
 import com.NestBlog.Payload.PostDto;
 import com.NestBlog.service.PostService;
 import jakarta.validation.Valid;
@@ -38,14 +39,14 @@ public class PostController {
 
     //http://localhost:8080/api/posts?pageNo=0&pageSize=5&sortBy=title&sortDir=asc
     @GetMapping
-    public ResponseEntity<List<PostDto>> fetchAllPosts(
+    public ResponseEntity<ListPostDto> fetchAllPosts(
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize,
             @RequestParam(name = "sortBy", defaultValue = "id", required = false) String sortBy,
             @RequestParam(name = "sortDir", defaultValue = "asc", required = false) String sortDir
     ){
-        List<PostDto> postDtos = postService.fetchAllPosts(pageNo, pageSize, sortBy, sortDir);
-        return new ResponseEntity<>(postDtos, HttpStatus.OK);
+        ListPostDto listPostDto = postService.fetchAllPosts(pageNo, pageSize, sortBy, sortDir);
+        return new ResponseEntity<>(listPostDto, HttpStatus.OK);
     }
 
 }
