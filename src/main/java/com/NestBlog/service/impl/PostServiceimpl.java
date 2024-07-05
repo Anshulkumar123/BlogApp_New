@@ -44,11 +44,10 @@ public class PostServiceimpl implements PostService {
 
     @Override
     public List<PostDto> fetchAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
-//        List<Post> post = postRepository.findAll();
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize,sort);
         Page<Post> all = postRepository.findAll(pageable);
         List<Post> post = all.getContent();
         List<PostDto> postDtos = post.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
