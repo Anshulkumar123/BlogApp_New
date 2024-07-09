@@ -1,6 +1,7 @@
 package com.NestBlog.Controller;
 
 import com.NestBlog.Payload.CommentDto;
+import com.NestBlog.Payload.PostWithCommentDto;
 import com.NestBlog.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,8 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentDto>> getAllCommentsById(@PathVariable long postId){
-        List<CommentDto> comments = commentService.getAllCommentsByPostId(postId);
-        return new ResponseEntity<>(comments, HttpStatus.CREATED);
+    public ResponseEntity<PostWithCommentDto> getAllCommentsById(@PathVariable long postId){
+        PostWithCommentDto allCommentsByPostId = commentService.getAllCommentsByPostId(postId);
+        return new ResponseEntity<>(allCommentsByPostId, HttpStatus.CREATED);
     }
 }
