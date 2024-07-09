@@ -11,11 +11,4 @@ public class PostWithCommentDto {
     private Post post;
     private List<CommentDto> commentDto;
 
-    @Override
-    public String toString() {
-        return "PostWithCommentDto{" +
-                "post=" + post +
-                ", commentDto=" + commentDto +
-                '}';
-    }
 }
