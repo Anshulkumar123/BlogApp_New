@@ -49,4 +49,11 @@ public class PostController {
         return new ResponseEntity<>(listPostDto, HttpStatus.OK);
     }
 
+    //http://localhost:8080/api/posts/1
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable long id){
+        PostDto dto = postService.getPostById(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
 }

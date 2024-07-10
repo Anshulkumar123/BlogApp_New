@@ -3,6 +3,7 @@ package com.NestBlog.service.impl;
 import com.NestBlog.Payload.ListPostDto;
 import com.NestBlog.Payload.PostDto;
 import com.NestBlog.entity.Post;
+import com.NestBlog.exception.ResourceNotFound;
 import com.NestBlog.repository.PostRepository;
 import com.NestBlog.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -41,6 +42,13 @@ public class PostServiceimpl implements PostService {
     @Override
     public void deletePost(long id) {
         postRepository.deleteById(id);
+    }
+
+    public PostDto getPostById(long id){
+        Post post = postRepository.findById(id).orElseThrow(
+                ()->new ResourceNotFound("Post not found with id :"+ id)
+        );
+        return mapToDto(post);
     }
 
     @Override
