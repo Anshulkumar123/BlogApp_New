@@ -17,14 +17,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorDetail> handlerExceptionNotFound(
             ResourceNotFound e, WebRequest webRequest
     ){
-        ErrorDetail error = new ErrorDetail( new Date(), e.getMessage(), webRequest.getDescription(false));
+        ErrorDetail error = new ErrorDetail( new Date(), e.getMessage(), webRequest.getDescription(true));
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> globalExceptionHandler(
-            Exception e
+            Exception e, WebRequest webRequest
     ){
+        ErrorDetail error = new ErrorDetail( new Date(), e.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

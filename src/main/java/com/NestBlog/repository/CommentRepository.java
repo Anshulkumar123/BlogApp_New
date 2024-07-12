@@ -1,7 +1,7 @@
 package com.NestBlog.repository;
 
 import com.NestBlog.entity.Comment;
-import jakarta.persistence.metamodel.SingularAttribute;
+//import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.repository.JpaRepository;
 

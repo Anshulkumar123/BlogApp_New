@@ -3,7 +3,7 @@ package com.NestBlog.Controller;
 import com.NestBlog.Payload.ListPostDto;
 import com.NestBlog.Payload.PostDto;
 import com.NestBlog.service.PostService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
