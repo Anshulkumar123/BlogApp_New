@@ -6,6 +6,7 @@ import com.NestBlog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //http://localhost:8080/api/auth/sign-up
     @PostMapping("/sign-up")
@@ -33,7 +37,7 @@ public class AuthController {
         user.setName(signup.getName());
         user.setEmail(signup.getEmail());
         user.setUsername(signup.getUsername());
-        user.setPassword(signup.getPassword());
+        user.setPassword(passwordEncoder.encode(signup.getPassword()));
 
         userRepository.save(user);
 
