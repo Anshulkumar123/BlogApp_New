@@ -19,9 +19,6 @@ public class NestBlogApplication {
 		return new ModelMapper();
 	}
 
-	@Bean
-	public PasswordEncoder getPasswordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
+
 
 }

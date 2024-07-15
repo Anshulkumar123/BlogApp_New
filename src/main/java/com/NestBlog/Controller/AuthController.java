@@ -1,5 +1,6 @@
 package com.NestBlog.Controller;
 
+import com.NestBlog.Payload.LoginDto;
 import com.NestBlog.Payload.Signup;
 import com.NestBlog.entity.User;
 import com.NestBlog.repository.UserRepository;
@@ -42,5 +43,11 @@ public class AuthController {
         userRepository.save(user);
 
         return new ResponseEntity<>("user registered", HttpStatus.CREATED);
+
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<String> singIn(@RequestBody LoginDto loginDto){
+        return null;
     }
 }
