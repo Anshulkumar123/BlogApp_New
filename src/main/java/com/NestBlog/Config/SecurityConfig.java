@@ -25,9 +25,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManagerBean();
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "api/auth/**").permitAll();
+        http.csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.POST, "api/auth/**").permitAll()
+                .anyRequest().authenticated().and().httpBasic()
+        ;
     }
 
     @Override
